@@ -1,0 +1,39 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- namespace.yaml
+- repo-credentials.yaml
+- repo-argocd.yaml
+- repo-kubernetes.yaml
+- github.com/argoproj/argo-cd/manifests/crds/?ref=v2.1.7
+- github.com/argoproj/argo-cd/manifests/base/?ref=v2.1.7
+- github.com/argoproj/argo-cd/manifests/cluster-rbac/?ref=v2.1.7
+namespace: argocd
+patchesJson6902:
+- target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: argocd-redis
+  patch: |-
+    - op: replace
+      path: /spec/template/spec/securityContext/runAsNonRoot
+      value: false
+- target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: argocd-server
+  patch: |-
+    - op: add
+      path: /spec/template/spec/containers/0/command/-
+      value: "--insecure"
+    - op: add
+      path: /spec/template/spec/containers/0/command/-
+      value: "--rootpath"
+    - op: add
+      path: /spec/template/spec/containers/0/command/-
+      value: "/argocd"
+patchesStrategicMerge:
+- repo-server.yaml
+namespace: argocd
