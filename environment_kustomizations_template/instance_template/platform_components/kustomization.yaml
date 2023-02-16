@@ -1,0 +1,106 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../../../app_manifests/platform_components
+namespace: argocd
+patches:
+- path: patch.yaml
+  target:
+    kind: Application
+patchesJson6902:
+- target:
+    group: argoproj.io
+    version: v1alpha1
+    kind: Application
+    name: base
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: environment_kustomizations/<<cluster_name>>/<<instance_name>>/base
+    - op: replace
+      path: /metadata/name
+      value: <<instance_name>>-base
+- target:
+    group: argoproj.io
+    version: v1alpha1
+    kind: Application
+    name: connections
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: environment_kustomizations/<<cluster_name>>/<<instance_name>>/connections
+    - op: replace
+      path: /metadata/name
+      value: <<instance_name>>-connections
+- target:
+    group: argoproj.io
+    version: v1alpha1
+    kind: Application
+    name: event-listener
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: environment_kustomizations/<<cluster_name>>/<<instance_name>>/event-listener
+    - op: replace
+      path: /metadata/name
+      value: <<instance_name>>-event-listener
+- target:
+    group: argoproj.io
+    version: v1alpha1
+    kind: Application
+    name: meta-forms
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: environment_kustomizations/<<cluster_name>>/<<instance_name>>/meta-forms
+    - op: replace
+      path: /metadata/name
+      value: <<instance_name>>-meta-forms
+- target:
+    group: argoproj.io
+    version: v1alpha1
+    kind: Application
+    name: idp
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: environment_kustomizations/<<cluster_name>>/<<instance_name>>/idp
+    - op: replace
+      path: /metadata/name
+      value: <<instance_name>>-idp
+- target:
+    group: argoproj.io
+    version: v1alpha1
+    kind: Application
+    name: worker
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: environment_kustomizations/<<cluster_name>>/<<instance_name>>/worker
+    - op: replace
+      path: /metadata/name
+      value: <<instance_name>>-worker
+- target:
+    group: argoproj.io
+    version: v1alpha1
+    kind: Application
+    name: web
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: environment_kustomizations/<<cluster_name>>/<<instance_name>>/web
+    - op: replace
+      path: /metadata/name
+      value: <<instance_name>>-web
+- target:
+    group: argoproj.io
+    version: v1alpha1
+    kind: Application
+    name: maintenance-cli
+  patch: |-
+    - op: replace
+      path: /spec/source/path
+      value: environment_kustomizations/<<cluster_name>>/<<instance_name>>/maintenance-cli
+    - op: replace
+      path: /metadata/name
+      value: <<instance_name>>-maintenance-cli

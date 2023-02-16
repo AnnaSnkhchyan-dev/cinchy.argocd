@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cinchy-kubernetes-repo
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  url: <<cinchy_kubernetes_repo_url>>

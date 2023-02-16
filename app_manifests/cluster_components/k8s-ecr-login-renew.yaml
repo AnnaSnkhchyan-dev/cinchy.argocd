@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: k8s-ecr-login-renew
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  project: default
+  source:
+    path: cluster_components/middleware/k8s-ecr-login-renew
+    repoURL: <repoURL>
+    targetRevision: <revision>
+  destination:
+    server: <server>
+    namespace: ns-ecr-renew
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+    - CreateNamespace=true

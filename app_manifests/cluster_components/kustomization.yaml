@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- k8s-ecr-login-renew.yaml
+- istio-gateways.yaml
+- istio-ingress.yaml
+- istio-resource.yaml
+- istio-virtualservice.yaml
+- istio-injection.yaml
+# - istio-secrets.yaml
+- istio-destinationrules.yaml
+- istio-peerauthentication.yaml
+- istio.yaml
+- logging-operator-logging.yaml
+- logging-operator.yaml
+- kube-prometheus-stack.yaml
+# - metrics-server.yaml
+- strimzi-kafka-operator.yaml
+- kafka-cluster.yaml
+- redis.yaml
+- opensearch.yaml
+- opensearch-dashboard.yaml

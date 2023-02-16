@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../../../app_manifests/cinchy
+namespace: argocd
+patches:
+- path: patch.yaml
+  target:
+    kind: Application
+patchesJson6902:
+- target:
+    group: argoproj.io
+    version: v1alpha1
+    kind: Application
+    name: cinchy
+  patch: |-
+    - op: replace
+      path: /metadata/name
+      value: <<instance_name>>-cinchy

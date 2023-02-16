@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: istio-resources
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  project: default
+  source:
+    path: cluster_components/servicemesh/istio/istio-1.13.1/manifests/charts/base
+    repoURL: <repoURL>
+    targetRevision: <revision>
+  destination:
+    server: <server>
+    namespace: istio-system
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+    - CreateNamespace=true
+  ignoreDifferences:
+  - group: admissionregistration.k8s.io
+    kind: ValidatingWebhookConfiguration
+    jsonPointers:
+    - /webhooks

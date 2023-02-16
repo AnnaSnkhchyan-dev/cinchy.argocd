@@ -1,0 +1,12 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: not-important
+spec:
+  source:
+    path: environment_kustomizations/<<cluster_name>>/<<instance_name>>/platform_components
+    targetRevision: <<cinchy_argocd_repo_revision>>
+    repoURL: <<cinchy_argocd_repo_url>>
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: <<namespace>>

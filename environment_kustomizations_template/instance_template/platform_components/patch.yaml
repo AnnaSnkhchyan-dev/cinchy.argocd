@@ -1,0 +1,11 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: not-important
+spec:
+  source:
+    targetRevision: <<cinchy_kubernetes_repo_revision>>
+    repoURL: <<cinchy_kubernetes_repo_url>>
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: <<namespace>>
